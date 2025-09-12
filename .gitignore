@@ -1,0 +1,14 @@
+# Java / Maven
+target/
+*.class
+
+# IDEs
+.vscode/
+.idea/
+*.iml
+
+# Logs
+*.log
+
+# Mac system files
+.DS_Store
