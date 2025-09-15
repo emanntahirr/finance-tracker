@@ -2,7 +2,7 @@ package com.emantahir.finance_tracker.model;
 
 import java.time.LocalDate;
 
-public class Achievement { // Achievement class 
+public class Achievement { // tracks individual achievements
     private String name;
     private String description;
     private boolean unlocked;

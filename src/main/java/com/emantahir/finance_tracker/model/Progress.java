@@ -1,6 +1,6 @@
 package com.emantahir.finance_tracker.model;
 
-public class Progress {
+public class Progress { // tracks overall user progress
     private int level;
     private int currentPoints;
     private int pointsToNextLevel;
