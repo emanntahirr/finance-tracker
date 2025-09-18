@@ -1,5 +1,4 @@
 package com.emantahir.finance_tracker.model;
-import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,72 +7,53 @@ import jakarta.persistence.Id;
 
 @Entity
 public class Investment {
-// fields
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long id;
-    private String name;
+
+    private String stockSymbol;
     private Double amountInvested;
-    private LocalDate investedDate;
-    private Double expectedReturnRate;
-    private Double currentValue;
+    private Double purchasePrice;
+    private Double currentPrice;
 
-    public Investment(String name, Double amountInvested, LocalDate investedDate, Double expectedReturnRate, Double currentValue) {
-        this.name = name;
-        this.amountInvested = amountInvested;
-        this.investedDate = investedDate;
-        this.expectedReturnRate = expectedReturnRate;
-        this.currentValue = currentValue;
+    public Investment() {}
+
+
+    
+    public Long getId() { 
+        return id; 
     }
-
-// getters and setters
-
-    public Long getId() {
-        return id;
-    }
-
     public void setId(Long id) {
-        this.id = id;
+        this.id = id; 
     }
 
-    public String getName() {
-        return name;
+    public String getStockSymbol() {
+        return stockSymbol; 
     }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setStockSymbol(String stockSymbol) {
+        this.stockSymbol = stockSymbol;
     }
 
     public Double getAmountInvested() {
         return amountInvested;
     }
-
     public void setAmountInvested(Double amountInvested) {
         this.amountInvested = amountInvested;
     }
 
-    public LocalDate getInvestedDate() {
-        return investedDate;
+    public Double getPurchasePrice() {
+        return purchasePrice;
     }
 
-    public void setInvestedDate(LocalDate investedDate) {
-        this.investedDate = investedDate;
+    public void setPurchasePrice(Double purchasePrice) {
+        this.purchasePrice = purchasePrice;
     }
 
-    public Double getExpectedReturnRate() {
-        return expectedReturnRate;
+    public Double getCurrentPrice() {
+        return currentPrice;
     }
-
-    public void setExpectedReturnRate(Double expectedReturnRate) {
-        this.expectedReturnRate = expectedReturnRate;
-    }
-
-    public Double getCurrentValue() {
-        return currentValue;
-    }
-
-    public void setCurrentValue(Double currentValue) {
-        this.currentValue = currentValue;
+    public void setCurrentPrice(Double currentPrice) {
+        this.currentPrice = currentPrice;
     }
 }

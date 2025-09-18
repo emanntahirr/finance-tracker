@@ -3,56 +3,43 @@ package com.emantahir.finance_tracker.controller;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.emantahir.finance_tracker.model.Investment;
-import com.emantahir.finance_tracker.repository.InvestmentRepository;
-import com.emantahir.finance_tracker.repository.TransactionRepository;
+import com.emantahir.finance_tracker.service.InvestmentService;
 
 @RestController
-@RequestMapping("/investments")
+@RequestMapping("/api/investments")
 public class InvestmentController {
 
-    private final InvestmentRepository investmentRepository;
-    private final TransactionRepository transactionRepository;
+    private final InvestmentService investmentService;
 
-    public InvestmentController(InvestmentRepository investmentRepository, 
-                                TransactionRepository transactionRepository) {
-        this.investmentRepository = investmentRepository;
-        this.transactionRepository = transactionRepository;
+    public InvestmentController(InvestmentService investmentService) {
+        this.investmentService = investmentService;
     }
 
-    // Add a new investment with balance check
     @PostMapping
-    public Investment addInvestment(@RequestBody Investment investment) {
-        double balance = transactionRepository.findAll()
-                .stream()
-                .mapToDouble(t -> t.getAmount())
-                .sum();
-
-        if (investment.getAmountInvested() > balance) {
-            throw new IllegalArgumentException("Not enough balance to invest!");
-        }
-
-        return investmentRepository.save(investment);
+    public Investment createInvestment(@RequestBody Investment investment) {
+        // delegate to the service
+        return investmentService.createInvestment(investment);
     }
 
-    // Get all investments
     @GetMapping
-    public List<Investment> getAllInvestments() {
-        return investmentRepository.findAll();
+    public List<Investment> getInvestments() {
+        return investmentService.getAllInvestments();
     }
 
-    // Get total value of all investments
-    @GetMapping("/total")
-    public double getTotalInvestmentValue() {
-        double total = 0;
-        for (Investment inv : investmentRepository.findAll()) {
-            total += inv.getAmountInvested(); // use amount for now
-        }
-        return total;
+    @PutMapping("/{id}/refresh")
+    public Investment refreshInvestment(@PathVariable Long id) {
+        return investmentService.refreshInvestment(id);
+    }
+    @PutMapping("/refresh-all")
+    public List<Investment> refreshAll() {
+        return investmentService.refreshAllInvestments();
     }
 }
