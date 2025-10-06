@@ -2,6 +2,7 @@ package com.emantahir.finance_tracker.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import com.emantahir.finance_tracker.model.Investment;
 import com.emantahir.finance_tracker.service.InvestmentService;
 
 @RestController
+@CrossOrigin(origins = {"https://finance-tracker-frontend.vercel.app", "http://localhost:3000"})
 @RequestMapping("/api/investments")
 public class InvestmentController {
 

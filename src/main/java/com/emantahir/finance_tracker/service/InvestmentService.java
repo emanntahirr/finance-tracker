@@ -1,9 +1,7 @@
 package com.emantahir.finance_tracker.service;
 
 import java.util.List;
-
 import org.springframework.stereotype.Service;
-
 import com.emantahir.finance_tracker.model.Investment;
 import com.emantahir.finance_tracker.repository.InvestmentRepository;
 
@@ -25,19 +23,22 @@ public class InvestmentService {
     }
 
     public Investment createInvestment(Investment investment) {
-
-        double currentBalance = transactionService.getBalance();
-        if (investment.getAmountInvested() > currentBalance) {
-            throw new RuntimeException("Insufficient funds to make this investment" + currentBalance);
+        
+        if (investment.getAmountInvested() == null) {
+            investment.setAmountInvested(0.0);
         }
-        Double price = marketDataService.getStockPrice(investment.getStockSymbol());
+        
+        Double marketPricePerUnit = marketDataService.getStockPrice(investment.getStockSymbol());
 
-        if (price == null) {
-            price = 100.0;
-        }
-
-        investment.setPurchasePrice(price);
-        investment.setCurrentPrice(price);
+        // The amount the user committed via the frontend form
+        Double committedAmount = investment.getAmountInvested();
+        
+        // 2. Set prices using the committed amount and the live market price
+        // purchasePrice is the initial value (the committed capital)
+        investment.setPurchasePrice(committedAmount); 
+        
+        // currentPrice is the live price fetched from the API
+        investment.setCurrentPrice(marketPricePerUnit); 
 
         return investmentRepository.save(investment);
     }
