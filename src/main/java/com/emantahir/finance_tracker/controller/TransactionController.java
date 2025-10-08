@@ -14,13 +14,13 @@ import com.emantahir.finance_tracker.service.TransactionService;
 
 @RestController
 @RequestMapping("/api/transactions")
-public class TransactionController { 
+public class TransactionController {
 
     private final TransactionService service;
     
     public TransactionController(TransactionService service) {
         this.service = service;
-    } 
+    }
 
     @GetMapping
     public List<Transaction> getAllTransactions() {

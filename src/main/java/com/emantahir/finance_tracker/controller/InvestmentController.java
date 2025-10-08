@@ -1,7 +1,9 @@
 package com.emantahir.finance_tracker.controller;
 
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,9 +28,19 @@ public class InvestmentController {
     }
 
     @PostMapping
-    public Investment createInvestment(@RequestBody Investment investment) {
-        // delegate to the service
-        return investmentService.createInvestment(investment);
+    public ResponseEntity<Investment> createInvestment(@RequestBody Investment investment) {
+        Investment newInvestment = investmentService.createInvestment(investment);
+        return ResponseEntity.ok(newInvestment);
+    }
+
+    public ResponseEntity<Map<String, Double>> getPortfolioSummary() {
+        Map<String, Double> summary = investmentService.getOverallPortfolioSummary();
+        return ResponseEntity.ok(summary);
+    }
+
+    public ResponseEntity<List<Investment>> getAllInvestments() {
+        List<Investment> investments = investmentService.getAllInvestments();
+        return ResponseEntity.ok(investments);
     }
 
     @GetMapping

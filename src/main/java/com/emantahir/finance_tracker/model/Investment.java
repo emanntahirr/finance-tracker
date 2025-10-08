@@ -5,8 +5,9 @@ import java.time.LocalDateTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType; // Add this import for @Column
-import jakarta.persistence.Id; // Recommended for tracking purchase date
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Transient;
 
 @Entity
 public class Investment {
@@ -20,7 +21,6 @@ public class Investment {
     
     @Column(nullable = false)
     private LocalDateTime purchaseDate = LocalDateTime.now();
-
     
     @Column(nullable = false)
     private Double quantity = 0.0; // The number of shares/units owned
@@ -30,8 +30,10 @@ public class Investment {
     
 
     private String type;
+    @Transient
     private Double amountInvested; // Total cash committed by the user (input)
-    private Double purchasePrice; // Total initial value (will be set equal to amountInvested in service)
+
+    private Double purchasePrice; // Total initial value
     private Double currentPrice; // Live price per unit/share
 
 
@@ -51,7 +53,6 @@ public class Investment {
         this.stockSymbol = stockSymbol;
     }
     
-    // NEW Getter/Setter for purchaseDate
     public LocalDateTime getPurchaseDate() {
         return purchaseDate;
     }
